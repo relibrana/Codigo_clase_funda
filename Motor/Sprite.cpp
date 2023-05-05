@@ -18,14 +18,23 @@ void Sprite::init(float x, float y, int width, int height,string texturePath) {
 	}
 
 	texture = ResourceManager::getTexture(texturePath);
-
-	Vertex vertexData[6];
+	
+	Vertex vertexData[12];
 	vertexData[0].setUV(1.0f,1.0f);
 	vertexData[1].setUV(0.0f,1.0f);
 	vertexData[2].setUV(0.0f,0.0f);
 	vertexData[3].setUV(0.0f, 0.0f);
 	vertexData[4].setUV(1.0f, 0.0f);
 	vertexData[5].setUV(1.0f, 1.0f);
+
+	vertexData[6].setUV(0.0f, 0.0f);
+	vertexData[7].setUV(1.0f, 0.0f);
+	vertexData[8].setUV(1.0f, 1.0f);
+	vertexData[9].setUV(1.0f, 1.0f);
+	vertexData[10].setUV(0.0f, 1.0f);
+	vertexData[11].setUV(0.0f, 0.0f);
+
+
 
 	vertexData[0].setPosition(x + width, y + height);
 	vertexData[1].setPosition(x, y + height);
@@ -34,12 +43,23 @@ void Sprite::init(float x, float y, int width, int height,string texturePath) {
 	vertexData[4].setPosition(x + width, y);
 	vertexData[5].setPosition(x + width, y + height);
 
-	for (int i = 0; i < 6; i++)
+
+	vertexData[6].setPosition(((x + width)*(-1) ), ((y + height) * (-1) ));
+	vertexData[7].setPosition((x * (-1) ), ((y + height)*(-1)));
+	vertexData[8].setPosition(x*(-1), y*(-1)); 
+	vertexData[9].setPosition(x * (-1), y * (-1));
+	vertexData[10].setPosition(((x + width)*(-1)), y*(-1));
+	vertexData[11].setPosition(((x + width)*(-1)), ((y + height))*(-1));
+
+	for (int i = 0; i < 12; i++)
 	{
 		vertexData[i].setColor(255, 255, 0, 255);
 	}
 	vertexData[2].setColor(255, 0, 255, 255);
 	vertexData[3].setColor(0, 255, 255, 255);
+
+	vertexData[8].setColor(255, 0, 255, 255);
+	vertexData[9].setColor(0, 255, 255, 255);
 	glBindBuffer(GL_ARRAY_BUFFER, vboID);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -59,7 +79,7 @@ void Sprite::draw() {
 			(void*)offsetof(Vertex, uv));
 
 
-	glDrawArrays(GL_TRIANGLES, 0, 6);
+	glDrawArrays(GL_TRIANGLES, 0, 12);
 	glDisableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

@@ -67,6 +67,7 @@ void MainGame::draw() {
 void MainGame::run() {
 	init();
 	sprite.init(-1, -1, 1, 1,"Textures/imagen.png");
+
 	update();
 }
 
