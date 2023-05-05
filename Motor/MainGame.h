@@ -15,9 +15,10 @@ private:
 	int width;
 	int height;
 	float time;
+
 	Window window;
 	HLSLProgram program;
-	Sprite sprite;
+	Sprite sprite[2];
 	void init();
 	void processInput();
 	void initShaders();
@@ -30,5 +31,7 @@ public:
 	void run();
 	void draw();
 	void update();
+
+
 };
 

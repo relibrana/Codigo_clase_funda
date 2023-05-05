@@ -59,14 +59,16 @@ void MainGame::draw() {
 	time += 0.002;
 	GLuint imageLocation = program.getUniformLocation("myImage");
 	glUniform1i(imageLocation, 0);
-	sprite.draw();
+	sprite[0].draw();
+	sprite[1].draw();
 	program.unuse();
 	window.swapWindow();
 }
 
 void MainGame::run() {
 	init();
-	sprite.init(-1, -1, 1, 1,"Textures/imagen.png");
+	sprite[0].init(-1, -1, 1, 1, "Textures/imagen.png");
+	sprite[1].init(1, 1, -1, -1, "Textures/imagen.png");
 
 	update();
 }
