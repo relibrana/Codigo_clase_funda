@@ -8,7 +8,8 @@ MainGame::MainGame() {
 	height = 600;
 	gameState = GameState::PLAY;
 	time = 0;
-}
+	camera2D.init(width, height);
+};
 
 MainGame::~MainGame() {
 
@@ -26,6 +27,7 @@ void MainGame::processInput() {
 				break;
 		}
 	}
+	handleInput();
 }
 
 void MainGame::initShaders()
@@ -57,8 +59,12 @@ void MainGame::draw() {
 	GLuint timeLocation = program.getUniformLocation("time");
 	glUniform1f(timeLocation, time);
 	time += 0.002;
+	glm::mat4 cameraMatrix = camera2D.getCameraMatrix();
+	GLuint pCameraLocation =program.getUniformLocation("pCamera");
+	glUniformMatrix4fv(pCameraLocation,1, GL_FALSE, &(cameraMatrix[0][0]));
 	GLuint imageLocation = program.getUniformLocation("myImage");
 	glUniform1i(imageLocation, 0);
+	
 	sprite.draw();
 	program.unuse();
 	window.swapWindow();
