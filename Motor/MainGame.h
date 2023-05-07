@@ -4,6 +4,7 @@
 #include "Sprite.h"
 #include "HLSLProgram.h"
 #include "Window.h"
+#include <vector>
 
 enum class GameState {
 	PLAY,EXIT
@@ -12,20 +13,23 @@ enum class GameState {
 class MainGame
 {
 private:
+	int max_sprites;
+	float time;
 	int width;
 	int height;
-	float time;
 	Window window;
 	HLSLProgram program;
-	Sprite sprite;
+	std::vector < Sprite*> sprites;
 	void init();
 	void processInput();
 	void initShaders();
+	void spritesGenerate();
 
 public:
 	MainGame();
 	~MainGame();
 	GameState gameState;
+	
 	
 	void run();
 	void draw();

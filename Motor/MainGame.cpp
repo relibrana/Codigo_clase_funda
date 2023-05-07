@@ -1,6 +1,7 @@
 #include "MainGame.h"
 #include <iostream>
 #include "Error.h"
+#include <windows.h>
 using namespace std;
 
 MainGame::MainGame() {
@@ -8,6 +9,7 @@ MainGame::MainGame() {
 	height = 600;
 	gameState = GameState::PLAY;
 	time = 0;
+	max_sprites=20;
 }
 
 MainGame::~MainGame() {
@@ -39,7 +41,7 @@ void MainGame::initShaders()
 
 void MainGame::init() {
 	SDL_Init(SDL_INIT_EVERYTHING);
-	window.create("Hola", width, height,0);
+	window.create("relibrana", width, height,0);
 	GLenum error = glewInit();
 	if (error != GLEW_OK) {
 		fatalError("Glew not initialized");
@@ -59,20 +61,48 @@ void MainGame::draw() {
 	time += 0.002;
 	GLuint imageLocation = program.getUniformLocation("myImage");
 	glUniform1i(imageLocation, 0);
-	sprite.draw();
+	for (int i = 0; i < sprites.size(); ++i)
+	{
+		sprites[i]->draw();
+	}
+	
 	program.unuse();
 	window.swapWindow();
 }
 
+void MainGame::spritesGenerate() {
+
+
+	/*if (sprites.size() < max_sprites) {
+		sprites.resize(sprites.size() + 1);
+
+	}*/
+	if (sprites.size()==max_sprites)return;
+	/*for (size_t i = 0; i < 0; i++)
+	{
+		sprites[i]->init(-1, -1, 1, 1, "Textures/imagen.png");
+	}*/
+	cout << "cuadradito";
+	float x = rand() ;
+	float y = rand() ;
+	Sprite* sprite=new Sprite();
+	sprite->init(-1, -1, 1, 1, "Textures/imagen.png");
+	sprites.push_back(sprite);
+	Sleep(20);
+}
 void MainGame::run() {
 	init();
-	sprite.init(-1, -1, 1, 1,"Textures/imagen.png");
 	update();
+
+	
 }
+
+
 
 void MainGame::update() {
 	while (gameState != GameState::EXIT) {
 		draw();
+		spritesGenerate();
 		processInput();
 	}
 }
